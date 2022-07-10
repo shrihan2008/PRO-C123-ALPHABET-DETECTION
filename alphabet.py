@@ -13,17 +13,14 @@ from Pil import Image
 import PIL.ImageOps
 import os,ssl,time
 
-if (not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None)): 
-    ssl._create_default_https_context = ssl._create_unverified_context
-
-X,y=fetch_openml('mnist_784',version=1,return_X_y=True)
+X =np.load('image.npz')['arr_0']
+y =pd.read_csv("labels.csv")["labels"]
 print(pd.Series(y).value_counts())
 
 classes=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 nclasses=len(classes)
 
-X =np.load('image.npz')['arr_0']
-y =pd.read_csv("labels.csv")["labels"]
+
 
 X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=2500,train_size=7500,random_state=49)
 X_train_scale=X_train/255.0
